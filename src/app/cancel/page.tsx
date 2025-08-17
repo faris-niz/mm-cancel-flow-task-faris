@@ -10,7 +10,6 @@ import StepVisaWithoutMM from "./StepVisaWithoutMM";
 import CancellationConfirmationHelpVisa from "./CancellationConfirmationHelpVisa";
 import CancellationConfirmationNoHelpVisa from "./CancellationConfirmationNoHelpVisa";
 import StepOffer from "./StepOffer";
-import StepCancelReason from "./StepCancelReason";
 import StepUsingMigrate from "./StepUsingMigrate";
 import StepReasonForCancelling from "./StepReasonForCancelling";
 import StepCancellationConfirmation from "./StepCancellationConfirmation";
