@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 export default function StepReasonForCancelling(props: { setStep: any }) {
   const [selectedReason, setSelectedReason] = useState('');
   const [feedback, setFeedback] = useState('');
+  const [willingToPay, setWillingToPay] = useState('');
   const router = useRouter();
 
   return (
@@ -151,7 +152,7 @@ export default function StepReasonForCancelling(props: { setStep: any }) {
                     </div>)
             }
 
-            <div className="relative">
+            {selectedReason!='too-expensive' ? (<div className="relative">
               <textarea
                 value={feedback}
                 onChange={(e) => setFeedback(e.target.value)}
@@ -161,7 +162,18 @@ export default function StepReasonForCancelling(props: { setStep: any }) {
               <div className="absolute bottom-3 right-3 text-xs text-gray-400">
                 Min 25 characters ({feedback.length}/25)
               </div>
-            </div>
+            </div>)
+            : <div className="relative">
+              <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 font-medium">
+                $
+              </div>
+              <input
+                type="text"
+                onChange={(e) => setWillingToPay(e.target.value)}
+                placeholder="0.00"
+                className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-400"
+              />
+            </div>}
           </div>
         )}
         <div className="space-y-3 pt-4">
@@ -170,9 +182,11 @@ export default function StepReasonForCancelling(props: { setStep: any }) {
           </button>
 
           <button
-                disabled={!selectedReason || feedback.length<25}
+                disabled={selectedReason==='' || (selectedReason!='too-expensive' && feedback.length<25) || 
+    (selectedReason==='too-expensive' && willingToPay==='')}
                 className={`w-full py-3 px-6 rounded-lg text-sm font-medium transition-all mt-2 ${
-                  selectedReason && feedback.length>25
+                  !(selectedReason==='' || (selectedReason!='too-expensive' && feedback.length<25) || 
+    (selectedReason==='too-expensive' && willingToPay===''))
                     ? "w-full py-3 px-6 rounded-lg text-white font-medium transition-all bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700"
                     : 'bg-gray-200 text-gray-400 cursor-not-allowed'
                 }`}
